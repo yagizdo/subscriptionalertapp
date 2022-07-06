@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:subscriptionalertapp/core/constants/route_constant.dart';
 import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
 
 import 'core/constants/locale_constant.dart';
 import 'core/constants/path_constant.dart';
 import 'core/constants/string_constant.dart';
 import 'core/locators/locators.dart';
+import 'core/services/local_notification/local_notification_service.dart';
 import 'core/services/localization/localization_service.dart';
 import 'core/services/route/route_service.dart';
 import 'core/services/theme/theme_service.dart';
@@ -23,12 +25,15 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   EasyLocalization.logger.enableBuildModes = [];
 
+  //init local database
+  await Hive.initFlutter();
+  Hive.registerAdapter(SubsModelAdapter());
+  await Hive.openBox<SubsModel>('subs');
+
   //setup locator
   configureLocators();
 
-  //init local database
-  await Hive.initFlutter();
-  await Hive.openBox<SubsModel>("subs");
+  
 
   runApp(
     //localization
@@ -42,15 +47,36 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final localizationService = locator<LocalizationService>(param1: context);
-    final themeService = locator<ThemeService>();
-    final routeService = locator<RouteService>(param1: context);
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  late final localizationService =
+      locator<LocalizationService>(param1: context);
+  late final routeService = locator<RouteService>(param1: context);
+  final themeService = locator<ThemeService>();
+  final localNotificationService = locator<LocalNotificationService>();
+
+  @override
+  void initState() {
+    super.initState();
+    localNotificationService.init();
+    localNotificationService.onNotifications.stream.listen(
+      (payload) {
+        routeService.pushWithArgs(
+          route: RouteConstant.HOME,
+          args: payload.toString(),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     //screen adaptation
     return ScreenUtilInit(
       designSize: const Size(360, 690),

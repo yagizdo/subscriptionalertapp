@@ -6,8 +6,10 @@ import 'base/base_local_database_service.dart';
 
 @singleton
 class LocalDatabaseService extends BaseLocalDatabaseService {
-  final box = Hive.box<SubsModel>('subs');
 
+
+
+  final box = Hive.box<SubsModel>('subs');
 
   @override
   SubsModel? get(String subsId) {
