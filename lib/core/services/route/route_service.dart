@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:subscriptionalertapp/core/constants/route_constant.dart';
+import '../../constants/route_constant.dart';
 
 import '../../../features/home/view/home_view.dart';
 import '../../../features/init/view/init_view.dart';

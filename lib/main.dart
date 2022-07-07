@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:subscriptionalertapp/core/constants/route_constant.dart';
-import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
+import 'core/constants/route_constant.dart';
+import 'features/home/model/subs_model.dart';
 
 import 'core/constants/locale_constant.dart';
 import 'core/constants/path_constant.dart';

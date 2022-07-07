@@ -1,6 +1,6 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
+import '../../../features/home/model/subs_model.dart';
 
 import 'base/base_local_database_service.dart';
 

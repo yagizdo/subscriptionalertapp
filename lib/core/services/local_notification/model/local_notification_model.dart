@@ -1,4 +1,5 @@
 class LocalNotificationModel {
+  //you should use unique id for each notification
   final int id;
   final String? title;
   final String? body;

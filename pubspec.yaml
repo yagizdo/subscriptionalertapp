@@ -71,6 +71,9 @@ dependencies:
   #Timezone for Local Notifications
   timezone: ^0.8.0
 
+  #Date Time Picker
+  date_time_picker: ^2.1.0
+
   
 
 
