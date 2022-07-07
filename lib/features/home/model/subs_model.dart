@@ -16,27 +16,31 @@ class SubsModel extends HiveObject {
   final String? description;
 
   @HiveField(3)
-  final String? color;
+  final int? color_1;
 
   @HiveField(4)
-  final double? price;
+  final int? color_2;
 
   @HiveField(5)
-  final bool? annual;
+  final String? price;
 
   @HiveField(6)
-  final bool? active;
+  final String? type;
 
   @HiveField(7)
-  final DateTime? paymentDate;
+  final bool? active;
+
+  @HiveField(8)
+  final String? paymentDate;
 
   SubsModel({
     this.id,
     this.name,
     this.description,
-    this.color,
+    this.color_1,
+    this.color_2,
     this.price,
-    this.annual,
+    this.type,
     this.active,
     this.paymentDate,
   });
@@ -44,4 +48,11 @@ class SubsModel extends HiveObject {
   factory SubsModel.fromJson(Map<String, dynamic> json) =>
       _$SubsModelFromJson(json);
   Map<String, dynamic> toJson() => _$SubsModelToJson(this);
+
+  
+
+  @override
+  String toString() {
+    return 'SubsModel(id: $id, name: $name, description: $description, color_1: $color_1, color_2: $color_2, price: $price, type: $type, active: $active, paymentDate: $paymentDate)';
+  }
 }

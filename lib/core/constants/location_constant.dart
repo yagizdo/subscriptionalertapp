@@ -1,3 +1,3 @@
 class LocationConstant{
-  static const String TURKEY_TIMEZONE = 'Asia/Istanbul';
+  static const String TURKEY_TIMEZONE = 'Europe/Istanbul';
 }

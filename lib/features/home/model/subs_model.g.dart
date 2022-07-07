@@ -20,18 +20,19 @@ class SubsModelAdapter extends TypeAdapter<SubsModel> {
       id: fields[0] as String?,
       name: fields[1] as String?,
       description: fields[2] as String?,
-      color: fields[3] as String?,
-      price: fields[4] as double?,
-      annual: fields[5] as bool?,
-      active: fields[6] as bool?,
-      paymentDate: fields[7] as DateTime?,
+      color_1: fields[3] as int?,
+      color_2: fields[4] as int?,
+      price: fields[5] as String?,
+      type: fields[6] as String?,
+      active: fields[7] as bool?,
+      paymentDate: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, SubsModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -39,14 +40,16 @@ class SubsModelAdapter extends TypeAdapter<SubsModel> {
       ..writeByte(2)
       ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.color)
+      ..write(obj.color_1)
       ..writeByte(4)
-      ..write(obj.price)
+      ..write(obj.color_2)
       ..writeByte(5)
-      ..write(obj.annual)
+      ..write(obj.price)
       ..writeByte(6)
-      ..write(obj.active)
+      ..write(obj.type)
       ..writeByte(7)
+      ..write(obj.active)
+      ..writeByte(8)
       ..write(obj.paymentDate);
   }
 
@@ -69,22 +72,22 @@ SubsModel _$SubsModelFromJson(Map<String, dynamic> json) => SubsModel(
       id: json['id'] as String?,
       name: json['name'] as String?,
       description: json['description'] as String?,
-      color: json['color'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
-      annual: json['annual'] as bool?,
+      color_1: json['color_1'] as int?,
+      color_2: json['color_2'] as int?,
+      price: json['price'] as String?,
+      type: json['type'] as String?,
       active: json['active'] as bool?,
-      paymentDate: json['paymentDate'] == null
-          ? null
-          : DateTime.parse(json['paymentDate'] as String),
+      paymentDate: json['paymentDate'] as String?,
     );
 
 Map<String, dynamic> _$SubsModelToJson(SubsModel instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
-      'color': instance.color,
+      'color_1': instance.color_1,
+      'color_2': instance.color_2,
       'price': instance.price,
-      'annual': instance.annual,
+      'type': instance.type,
       'active': instance.active,
-      'paymentDate': instance.paymentDate?.toIso8601String(),
+      'paymentDate': instance.paymentDate,
     };

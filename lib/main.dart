@@ -14,6 +14,8 @@ import 'core/services/local_notification/local_notification_service.dart';
 import 'core/services/localization/localization_service.dart';
 import 'core/services/route/route_service.dart';
 import 'core/services/theme/theme_service.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,11 +31,13 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(SubsModelAdapter());
   await Hive.openBox<SubsModel>('subs');
+  await Hive.openBox('notify');
+
+  //init timezone for notification
+  tz.initializeTimeZones();
 
   //setup locator
   configureLocators();
-
-  
 
   runApp(
     //localization

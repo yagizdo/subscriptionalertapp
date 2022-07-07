@@ -17,9 +17,9 @@ class LocalNotificationService extends BaseLocalNotificationService {
     var androidInitializationSettings =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     var iosInitializationSettings = IOSInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
       onDidReceiveLocalNotification: onDidReceiveLocalNotificationIOS,
     );
 
@@ -28,7 +28,6 @@ class LocalNotificationService extends BaseLocalNotificationService {
       iOS: iosInitializationSettings,
     );
 
-    tz.initializeTimeZones();
     //getLocation turkey timezone
     tz.setLocalLocation(
       tz.getLocation(
@@ -38,7 +37,7 @@ class LocalNotificationService extends BaseLocalNotificationService {
 
     //notify listener when app is closed
     final details =
-        await  flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
     if (details != null && details.didNotificationLaunchApp) {
       onNotifications.add(details.payload);
@@ -57,8 +56,8 @@ class LocalNotificationService extends BaseLocalNotificationService {
     // display a dialog with the notification details, tap ok to go to another page
   }
 
-  Future<void> showNotification({
-      LocalNotificationModel? localNotificationModel}) async {
+  Future<void> showNotification(
+      {LocalNotificationModel? localNotificationModel}) async {
     await flutterLocalNotificationsPlugin.show(
       localNotificationModel!.id,
       localNotificationModel.title,
@@ -68,8 +67,8 @@ class LocalNotificationService extends BaseLocalNotificationService {
     );
   }
 
-  Future<void> showScheduledNotification({
-      LocalNotificationModel? localNotificationModel}) async {
+  Future<void> showScheduledNotification(
+      {LocalNotificationModel? localNotificationModel}) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       localNotificationModel!.id,
       localNotificationModel.title,
@@ -82,13 +81,12 @@ class LocalNotificationService extends BaseLocalNotificationService {
           UILocalNotificationDateInterpretation.absoluteTime,
       //if the notificstion will be triggered in the future,
       // DateTimeComponents must be set to "dateAndTime"
-      matchDateTimeComponents: DateTimeComponents.time,
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
   }
 
   notificationDetails() {
     const androidNotificationDetails = AndroidNotificationDetails(
-      //you should use unique id for each notification
       'your channel id',
       'your channel name',
       channelDescription: 'your channel description',
