@@ -9,6 +9,11 @@ class LocalDatabaseService extends BaseLocalDatabaseService {
   final subsBox = Hive.box<SubsModel>('subs');
 
   @override
+  SubsModel? getSubs(String subsId) {
+    return subsBox.get(subsId);
+  }
+
+  @override
   SubsModel? getSubsAt(int index) {
     return subsBox.getAt(index);
   }
@@ -30,6 +35,7 @@ class LocalDatabaseService extends BaseLocalDatabaseService {
 
   final notifyBox = Hive.box('notify');
 
+
   @override
   getNotifyAt(int index) {
     return notifyBox.getAt(index);
@@ -49,6 +55,4 @@ class LocalDatabaseService extends BaseLocalDatabaseService {
   Future<void> deleteNotify(String subsId) async {
     await notifyBox.delete(subsId);
   }
-  
- 
 }

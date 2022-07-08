@@ -1,6 +1,5 @@
 abstract class BaseRouteService {
-  void push({required String route});
-  void pushWithArgs({required String route, required Object args});
-  void go({required String route});
+  void push({required String route, Object extra});
+  void go({required String route, Object extra});
   void pop();
 }

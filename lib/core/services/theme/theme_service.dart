@@ -10,18 +10,21 @@ import 'base/base_theme_service.dart';
 class ThemeService implements BaseThemeService {
   final _initViewModel = locator<InitViewModel>();
 
-  final ThemeData _themeDark = FlexThemeData.dark(
-    scheme: FlexScheme.aquaBlue,
+  final ThemeData themeLight = FlexThemeData.light(
+    scheme: FlexScheme.flutterDash,
     useMaterial3: true,
   );
 
-  final ThemeData _themeLight = FlexThemeData.light(
-    scheme: FlexScheme.aquaBlue,
+  final ThemeData themeDark = FlexThemeData.dark(
+    scheme: FlexScheme.flutterDash,
     useMaterial3: true,
   );
 
-  ThemeData get theme =>
-      _initViewModel.brightness == Brightness.dark ? _themeDark : _themeLight;
+  ThemeMode get themeMode => _initViewModel.brightness == Brightness.dark
+      ? ThemeMode.dark
+      : ThemeMode.light;
+
+  ThemeData get theme => themeMode == ThemeMode.dark ? themeDark : themeLight;
 
   TextTheme get textStyle => theme.textTheme;
 }

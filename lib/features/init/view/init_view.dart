@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/route_constant.dart';
 import '../../../core/locators/locators.dart';
+import '../../../core/services/local_notification/local_notification_service.dart';
 import '../../../core/services/route/route_service.dart';
 import '../../../core/services/theme/theme_service.dart';
+import '../../single_subs/view/single_subs_view.dart';
 import '../view_model/init_view_model.dart';
 
 class InitView extends StatefulWidget {
@@ -21,22 +23,13 @@ class _InitViewState extends State<InitView> {
 
   Future<void> futureWait() async {
     await Future.delayed(const Duration(milliseconds: 500));
-    routeService.go(route:  RouteConstant.HOME);
-    //flutter_onboarding_slider control
-    /*if (a) {
-      setState(() {
-        Navigator.of(context).popAndPushNamed('/home');
-      });
-    } else {
-      setState(() {
-       // Navigator.of(context).popAndPushNamed('/auth');
-      });
-    }*/
+    routeService.go(route: RouteConstant.HOME);
   }
 
   @override
   void initState() {
     super.initState();
+
     futureWait();
   }
 

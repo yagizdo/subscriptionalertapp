@@ -21,14 +21,13 @@ abstract class HomeViewModelBase with Store {
   final localNotificationService = locator<LocalNotificationService>();
 
   @observable
-  List<SubsModel> subsList = [];
+  ObservableList<SubsModel> subsList = <SubsModel>[].asObservable();
 
   @action
   getSubsList() {
     for (int i = 0; i < localDatabaseService.subsBox.length; i++) {
       var subsModel = localDatabaseService.getSubsAt(i)!;
       subsList.add(subsModel);
-      print(subsModel.toString());
     }
   }
 
@@ -106,6 +105,7 @@ abstract class HomeViewModelBase with Store {
     if (isAddedLocalDatabase) {
       bool isAddedLocalNotification = await addLocalNotification(subsModel);
       if (isAddedLocalNotification) {
+        subsList.add(subsModel);
         return true;
       }
       return false;

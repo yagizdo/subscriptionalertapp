@@ -33,45 +33,47 @@ class AddSubsWidget extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Observer(builder: (_) {
-              return SubsCardWidget(
-                subsModel: SubsModel(
-                  name: homeViewModel.name,
-                  description: homeViewModel.description,
-                  color_1:
-                      homeViewModel.colorList[homeViewModel.selectedColorIndex],
-                  color_2: (() {
-                    if (homeViewModel.selectedColorIndex == 0) {
-                      return ColorConstant.CITRUSPEEL_2;
-                    }
-                    if (homeViewModel.selectedColorIndex == 1) {
-                      return ColorConstant.EVENINGNIGHT_2;
-                    }
-                    if (homeViewModel.selectedColorIndex == 2) {
-                      return ColorConstant.SINCITYRED_2;
-                    }
-                    if (homeViewModel.selectedColorIndex == 3) {
-                      return ColorConstant.SLIGHTOCEANVIEW_2;
-                    }
-                    if (homeViewModel.selectedColorIndex == 4) {
-                      return ColorConstant.ULTRAVIOLET_2;
-                    }
-                  }()),
-                  price: homeViewModel.price,
-                  type: homeViewModel.type,
-                  paymentDate: homeViewModel.dateTime,
-                ),
-              );
-            }),
-            SizedBox(
-              height: 10.h,
-            ),
-            const AddSubsFormWidget(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Observer(builder: (_) {
+                return SubsCardWidget(
+                  subsModel: SubsModel(
+                    name: homeViewModel.name,
+                    description: homeViewModel.description,
+                    color_1: homeViewModel
+                        .colorList[homeViewModel.selectedColorIndex],
+                    color_2: (() {
+                      if (homeViewModel.selectedColorIndex == 0) {
+                        return ColorConstant.CITRUSPEEL_2;
+                      }
+                      if (homeViewModel.selectedColorIndex == 1) {
+                        return ColorConstant.EVENINGNIGHT_2;
+                      }
+                      if (homeViewModel.selectedColorIndex == 2) {
+                        return ColorConstant.SINCITYRED_2;
+                      }
+                      if (homeViewModel.selectedColorIndex == 3) {
+                        return ColorConstant.SLIGHTOCEANVIEW_2;
+                      }
+                      if (homeViewModel.selectedColorIndex == 4) {
+                        return ColorConstant.ULTRAVIOLET_2;
+                      }
+                    }()),
+                    price: homeViewModel.price,
+                    type: homeViewModel.type,
+                    paymentDate: homeViewModel.dateTime,
+                  ),
+                );
+              }),
+              SizedBox(
+                height: 10.h,
+              ),
+              const AddSubsFormWidget(),
+            ],
+          ),
         ),
       ),
     );

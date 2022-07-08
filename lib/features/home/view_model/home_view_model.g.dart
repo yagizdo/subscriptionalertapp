@@ -13,13 +13,13 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
       Atom(name: 'HomeViewModelBase.subsList', context: context);
 
   @override
-  List<SubsModel> get subsList {
+  ObservableList<SubsModel> get subsList {
     _$subsListAtom.reportRead();
     return super.subsList;
   }
 
   @override
-  set subsList(List<SubsModel> value) {
+  set subsList(ObservableList<SubsModel> value) {
     _$subsListAtom.reportWrite(value, super.subsList, () {
       super.subsList = value;
     });

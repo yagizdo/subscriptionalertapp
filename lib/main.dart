@@ -15,7 +15,8 @@ import 'core/services/localization/localization_service.dart';
 import 'core/services/route/route_service.dart';
 import 'core/services/theme/theme_service.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+
+import 'features/single_subs/view/single_subs_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,14 +70,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     localNotificationService.init();
-    localNotificationService.onNotifications.stream.listen(
-      (payload) {
-        routeService.pushWithArgs(
-          route: RouteConstant.HOME,
-          args: payload.toString(),
-        );
-      },
-    );
   }
 
   @override
@@ -94,6 +87,8 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             //theme
             theme: themeService.theme,
+            themeMode: themeService.themeMode,
+            darkTheme: themeService.themeDark,
             //routes
             routeInformationParser:
                 routeService.globalRoutes.routeInformationParser,
