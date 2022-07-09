@@ -1,26 +1,31 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
+import '../../constants/local_database_constant.dart';
 import '../../../features/home/model/subs_model.dart';
 
 import 'base/base_local_database_service.dart';
 
 @singleton
 class LocalDatabaseService extends BaseLocalDatabaseService {
-  final subsBox = Hive.box<SubsModel>('subs');
+  final _subsBox = Hive.box<SubsModel>(
+    LocalDatabaseConstant.SUBS,
+  );
+
+  int get subsBoxLength => _subsBox.length;
 
   @override
   SubsModel? getSubs(String subsId) {
-    return subsBox.get(subsId);
+    return _subsBox.get(subsId);
   }
 
   @override
   SubsModel? getSubsAt(int index) {
-    return subsBox.getAt(index);
+    return _subsBox.getAt(index);
   }
 
   @override
   Future<void> addSubs(SubsModel subsModel) async {
-    await subsBox.put(subsModel.id, subsModel);
+    await _subsBox.put(subsModel.id, subsModel);
   }
 
   @override
@@ -33,26 +38,4 @@ class LocalDatabaseService extends BaseLocalDatabaseService {
     await subsModel.delete();
   }
 
-  final notifyBox = Hive.box('notify');
-
-
-  @override
-  getNotifyAt(int index) {
-    return notifyBox.getAt(index);
-  }
-
-  @override
-  Future<void> addNotify(String subsId, String notifyId) async {
-    await notifyBox.put(subsId, notifyId);
-  }
-
-  @override
-  Future<void> updateNotify(String subsId, String notifyId) async {
-    await notifyBox.put(subsId, notifyId);
-  }
-
-  @override
-  Future<void> deleteNotify(String subsId) async {
-    await notifyBox.delete(subsId);
-  }
 }

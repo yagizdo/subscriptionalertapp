@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/route_constant.dart';
-import '../../../core/locators/locators.dart';
-import '../../../core/services/local_notification/local_notification_service.dart';
+import '../../../core/init/service_locators_init.dart';
 import '../../../core/services/route/route_service.dart';
 import '../../../core/services/theme/theme_service.dart';
-import '../../single_subs/view/single_subs_view.dart';
 import '../view_model/init_view_model.dart';
 
 class InitView extends StatefulWidget {
@@ -29,7 +27,6 @@ class _InitViewState extends State<InitView> {
   @override
   void initState() {
     super.initState();
-
     futureWait();
   }
 

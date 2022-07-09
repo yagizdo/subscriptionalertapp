@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../features/init/view_model/init_view_model.dart';
-import '../../locators/locators.dart';
+import '../../init/service_locators_init.dart';
 import 'base/base_theme_service.dart';
 
 @singleton

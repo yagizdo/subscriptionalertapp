@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/locators/locators.dart';
+import '../../../core/init/service_locators_init.dart';
 import '../../../core/services/route/route_service.dart';
-import '../../home/model/subs_model.dart';
 import '../../home/view/widgets/subs_card_widget.dart';
 import '../view_model/single_subs_view_model.dart';
 
@@ -27,7 +26,7 @@ class SingleSubsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => routeService.pop(),
         ),
       ),

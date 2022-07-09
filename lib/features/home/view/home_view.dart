@@ -6,21 +6,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:subscriptionalertapp/core/constants/color_constant.dart';
+import 'package:subscriptionalertapp/core/constants/local_database_constant.dart';
 import 'package:subscriptionalertapp/core/constants/radius_constant.dart';
 import 'package:subscriptionalertapp/core/constants/route_constant.dart';
 import 'package:subscriptionalertapp/core/constants/string_constant.dart';
+import 'package:subscriptionalertapp/core/init/local_database_init.dart';
+import 'package:subscriptionalertapp/core/services/local_database/local_database_service.dart';
 import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
 import 'package:subscriptionalertapp/features/home/view/widgets/subs_card_widget.dart';
-import 'package:uuid/uuid.dart';
-import '../../../core/locators/locators.dart';
+
+import '../../../core/init/service_locators_init.dart';
 import '../../../core/services/local_notification/local_notification_service.dart';
 import '../../../core/services/route/route_service.dart';
 import '../../../core/services/theme/theme_service.dart';
 import '../../init/view_model/init_view_model.dart';
 import '../view_model/home_view_model.dart';
 
-part 'widgets/add_subs_widget.dart';
 part 'widgets/add_subs_form_widget.dart';
+part 'widgets/add_subs_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({
@@ -68,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
                 : Icons.brightness_7);
           }),
         ),
-        title: Text(
+        title: const Text(
           StringConstant.APP_NAME,
         ),
       ),
@@ -90,31 +93,28 @@ class _HomeViewState extends State<HomeView> {
             AddSubsWidget(onSubmitted: action),
         tappable: true,
       ),
-      body: Container(
-        child: Observer(
-          builder: (_) {
-            return ListView.builder(
-              addAutomaticKeepAlives: true,
-              reverse: true,
-              itemCount: homeViewModel.subsList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SubsCardWidget(
-                    subsModel: homeViewModel.subsList[index],
-                    onTap: () {
-                      routeService.push(
-                        route:
-                            "${RouteConstant.SINGLE_SUBS}/${homeViewModel.subsList[index].id!}",
-                        extra: homeViewModel.subsList[index],
-                      );
-                    },
-                  ),
-                );
-              },
-            );
-          },
-        ),
+      body: Observer(
+        builder: (_) {
+          return ListView.builder(
+            addAutomaticKeepAlives: true,
+            itemCount: homeViewModel.subsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.all(8.0.sm),
+                child: SubsCardWidget(
+                  subsModel: homeViewModel.subsList[index],
+                  onTap: () {
+                    routeService.push(
+                      route:
+                          "${RouteConstant.SINGLE_SUBS}/${homeViewModel.subsList[index].id!}",
+                      extra: homeViewModel.subsList[index],
+                    );
+                  },
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

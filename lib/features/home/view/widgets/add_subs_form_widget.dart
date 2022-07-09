@@ -17,7 +17,7 @@ class AddSubsFormWidget extends StatelessWidget {
               labelText: "Platform Name",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
-                  RadiusConstant.MIN,
+                  RadiusConstant.MIN.r,
                 ),
               ),
             ),
@@ -39,14 +39,13 @@ class AddSubsFormWidget extends StatelessWidget {
               labelText: "Description (Optional)",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
-                  RadiusConstant.MIN,
+                  RadiusConstant.MIN.r,
                 ),
               ),
             ),
             onChanged: (value) {
               homeViewModel.description = value;
             },
-            
           ),
           SizedBox(
             height: 8.h,
@@ -60,14 +59,14 @@ class AddSubsFormWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final color = homeViewModel.colorList[index];
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0.sm),
                   child: Container(
-                    width: 50.sm,
-                    height: 50.sm,
+                    width: 50.w,
+                    height: 50.h,
                     decoration: BoxDecoration(
                       color: Color(color),
                       borderRadius: BorderRadius.circular(
-                        RadiusConstant.MIN,
+                        RadiusConstant.MIN.r,
                       ),
                     ),
                     child: Observer(builder: (_) {
@@ -97,7 +96,7 @@ class AddSubsFormWidget extends StatelessWidget {
                     labelText: "Price",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
-                        RadiusConstant.MIN,
+                        RadiusConstant.MIN.r,
                       ),
                     ),
                   ),
@@ -145,7 +144,7 @@ class AddSubsFormWidget extends StatelessWidget {
               labelText: "Payment Date",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(
-                  RadiusConstant.MIN,
+                  RadiusConstant.MIN.r,
                 ),
               ),
             ),

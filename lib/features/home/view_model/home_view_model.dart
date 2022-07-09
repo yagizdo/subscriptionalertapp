@@ -1,13 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
-import 'package:subscriptionalertapp/core/constants/color_constant.dart';
-import 'package:subscriptionalertapp/core/services/local_database/local_database_service.dart';
-import 'package:subscriptionalertapp/core/services/local_notification/local_notification_service.dart';
-import 'package:subscriptionalertapp/core/services/local_notification/model/local_notification_model.dart';
+import '../../../core/constants/color_constant.dart';
+import '../../../core/services/local_database/local_database_service.dart';
+import '../../../core/services/local_notification/local_notification_service.dart';
+import '../../../core/services/local_notification/model/local_notification_model.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../core/locators/locators.dart';
+import '../../../core/init/service_locators_init.dart';
 import '../../../core/services/local_notification/local_notification_service.dart';
 import '../model/subs_model.dart';
 
@@ -25,9 +27,11 @@ abstract class HomeViewModelBase with Store {
 
   @action
   getSubsList() {
-    for (int i = 0; i < localDatabaseService.subsBox.length; i++) {
-      var subsModel = localDatabaseService.getSubsAt(i)!;
-      subsList.add(subsModel);
+    if (localDatabaseService.subsBoxLength > 0) {
+      for (int i = 0; i < localDatabaseService.subsBoxLength; i++) {
+        var subsModel = localDatabaseService.getSubsAt(i)!;
+        subsList.add(subsModel);
+      }
     }
   }
 
@@ -46,8 +50,7 @@ abstract class HomeViewModelBase with Store {
   @observable
   int selectedColorIndex = 0;
 
-  @observable
-  List<int> colorList = [
+  final List<int> colorList = [
     ColorConstant.CITRUSPEEL_1,
     ColorConstant.EVENINGNIGHT_1,
     ColorConstant.SINCITYRED_1,
@@ -73,39 +76,40 @@ abstract class HomeViewModelBase with Store {
 
   @action
   Future<bool> addSubscription() async {
-    final subsModel = SubsModel(
-      id: const Uuid().v1(),
-      name: name,
-      description: description ?? "",
-      color_1: colorList[selectedColorIndex],
-      color_2: (() {
-        if (selectedColorIndex == 0) {
-          return ColorConstant.CITRUSPEEL_2;
-        }
-        if (selectedColorIndex == 1) {
-          return ColorConstant.EVENINGNIGHT_2;
-        }
-        if (selectedColorIndex == 2) {
-          return ColorConstant.SINCITYRED_2;
-        }
-        if (selectedColorIndex == 3) {
-          return ColorConstant.SLIGHTOCEANVIEW_2;
-        }
-        if (selectedColorIndex == 4) {
-          return ColorConstant.ULTRAVIOLET_2;
-        }
-      }()),
-      price: price,
-      type: type,
-      paymentDate: dateTime,
-      active: true,
-    );
+    var subsModel = SubsModel(
+        id: const Uuid().v1(),
+        name: name,
+        description: description ?? "",
+        color_1: colorList[selectedColorIndex],
+        color_2: (() {
+          if (selectedColorIndex == 0) {
+            return ColorConstant.CITRUSPEEL_2;
+          }
+          if (selectedColorIndex == 1) {
+            return ColorConstant.EVENINGNIGHT_2;
+          }
+          if (selectedColorIndex == 2) {
+            return ColorConstant.SINCITYRED_2;
+          }
+          if (selectedColorIndex == 3) {
+            return ColorConstant.SLIGHTOCEANVIEW_2;
+          }
+          if (selectedColorIndex == 4) {
+            return ColorConstant.ULTRAVIOLET_2;
+          }
+        }()),
+        price: price,
+        type: type,
+        paymentDate: dateTime,
+        active: true,
+        notifyId: Random().nextInt(9999));
 
     bool isAddedLocalDatabase = await addLocalDatabase(subsModel);
     if (isAddedLocalDatabase) {
       bool isAddedLocalNotification = await addLocalNotification(subsModel);
       if (isAddedLocalNotification) {
         subsList.add(subsModel);
+        subsModel = SubsModel();     
         return true;
       }
       return false;
@@ -117,22 +121,23 @@ abstract class HomeViewModelBase with Store {
   Future<bool> addLocalDatabase(SubsModel subsModel) async {
     try {
       await localDatabaseService.addSubs(subsModel);
-      await localDatabaseService.addNotify(
-          subsModel.id!, subsList.length.toString());
+
       return true;
     } catch (e) {
-      print("Local Database Problem " + e.toString());
+      debugPrint("Local Database Problem $e");
       return false;
     }
   }
 
   Future<bool> addLocalNotification(SubsModel subsModel) async {
     final localNotificationModel = LocalNotificationModel(
-      id: subsList.length,
+      //id must be uniq for all notifications
+      id: subsModel.notifyId!,
       title: "Today is your payment for ${subsModel.name}",
       body: "Payment for ${subsModel.name} is ${subsModel.price}",
-      dateTime: DateTime.now()
-          .add(Duration(seconds: 5)), //DateTime.parse(subsModel.paymentDate!),
+      //to show notification 5 secons later
+      //or DateTime.parse(subsModel.paymentDate!),
+      dateTime: DateTime.now().add(const Duration(seconds: 5)),
       payload: subsModel.id,
     );
 
@@ -142,7 +147,7 @@ abstract class HomeViewModelBase with Store {
       );
       return true;
     } catch (e) {
-      print("Local Notification Problem " + e.toString());
+      debugPrint("Local Notification Problem $e");
       return false;
     }
   }

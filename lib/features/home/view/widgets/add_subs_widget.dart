@@ -35,7 +35,7 @@ class AddSubsWidget extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:  EdgeInsets.all(8.0.sm),
           child: Column(
             children: [
               Observer(builder: (_) {

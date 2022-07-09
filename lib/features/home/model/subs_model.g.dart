@@ -26,13 +26,14 @@ class SubsModelAdapter extends TypeAdapter<SubsModel> {
       type: fields[6] as String?,
       active: fields[7] as bool?,
       paymentDate: fields[8] as String?,
+      notifyId: fields[9] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, SubsModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -50,7 +51,9 @@ class SubsModelAdapter extends TypeAdapter<SubsModel> {
       ..writeByte(7)
       ..write(obj.active)
       ..writeByte(8)
-      ..write(obj.paymentDate);
+      ..write(obj.paymentDate)
+      ..writeByte(9)
+      ..write(obj.notifyId);
   }
 
   @override
@@ -78,6 +81,7 @@ SubsModel _$SubsModelFromJson(Map<String, dynamic> json) => SubsModel(
       type: json['type'] as String?,
       active: json['active'] as bool?,
       paymentDate: json['paymentDate'] as String?,
+      notifyId: json['notifyId'] as int?,
     );
 
 Map<String, dynamic> _$SubsModelToJson(SubsModel instance) => <String, dynamic>{
@@ -90,4 +94,5 @@ Map<String, dynamic> _$SubsModelToJson(SubsModel instance) => <String, dynamic>{
       'type': instance.type,
       'active': instance.active,
       'paymentDate': instance.paymentDate,
+      'notifyId': instance.notifyId,
     };

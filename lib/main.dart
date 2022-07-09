@@ -2,43 +2,28 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'core/constants/route_constant.dart';
-import 'features/home/model/subs_model.dart';
+import 'core/init/local_database_init.dart';
+import 'core/init/localization_init.dart';
+import 'core/init/screen_util_init.dart';
+import 'core/init/timezone_init.dart';
 
 import 'core/constants/locale_constant.dart';
 import 'core/constants/path_constant.dart';
 import 'core/constants/string_constant.dart';
-import 'core/locators/locators.dart';
+import 'core/init/service_locators_init.dart';
 import 'core/services/local_notification/local_notification_service.dart';
 import 'core/services/localization/localization_service.dart';
 import 'core/services/route/route_service.dart';
 import 'core/services/theme/theme_service.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-
-import 'features/single_subs/view/single_subs_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  //Screen size settings
-  await ScreenUtil.ensureScreenSize();
-
-  //init localization
-  await EasyLocalization.ensureInitialized();
-  EasyLocalization.logger.enableBuildModes = [];
-
-  //init local database
-  await Hive.initFlutter();
-  Hive.registerAdapter(SubsModelAdapter());
-  await Hive.openBox<SubsModel>('subs');
-  await Hive.openBox('notify');
-
-  //init timezone for notification
-  tz.initializeTimeZones();
-
-  //setup locator
-  configureLocators();
+  
+  await screenUtilInit();
+  await localizationInit();
+  await localDatabaseInit();
+  timezoneInit();
+  serviceLocatorsInit();
 
   runApp(
     //localization
@@ -89,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             theme: themeService.theme,
             themeMode: themeService.themeMode,
             darkTheme: themeService.themeDark,
-            //routes
+            //route
             routeInformationParser:
                 routeService.globalRoutes.routeInformationParser,
             routerDelegate: routeService.globalRoutes.routerDelegate,

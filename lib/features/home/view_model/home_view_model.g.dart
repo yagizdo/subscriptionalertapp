@@ -105,22 +105,6 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
     });
   }
 
-  late final _$colorListAtom =
-      Atom(name: 'HomeViewModelBase.colorList', context: context);
-
-  @override
-  List<int> get colorList {
-    _$colorListAtom.reportRead();
-    return super.colorList;
-  }
-
-  @override
-  set colorList(List<int> value) {
-    _$colorListAtom.reportWrite(value, super.colorList, () {
-      super.colorList = value;
-    });
-  }
-
   late final _$typeAtom =
       Atom(name: 'HomeViewModelBase.type', context: context);
 
@@ -195,7 +179,6 @@ name: ${name},
 description: ${description},
 price: ${price},
 selectedColorIndex: ${selectedColorIndex},
-colorList: ${colorList},
 type: ${type},
 dateTime: ${dateTime}
     ''';

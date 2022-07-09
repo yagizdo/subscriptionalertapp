@@ -1,18 +1,19 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:timezone/timezone.dart' as tz;
+
 import '../../constants/location_constant.dart';
 import 'base/base_local_notification_service.dart';
 import 'model/local_notification_model.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 @singleton
 class LocalNotificationService extends BaseLocalNotificationService {
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   final onNotifications = BehaviorSubject<String?>();
 
+  @override
   Future<void> init() async {
     var androidInitializationSettings =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -37,13 +38,13 @@ class LocalNotificationService extends BaseLocalNotificationService {
 
     //notify listener when app is closed
     final details =
-        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+        await _flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
     if (details != null && details.didNotificationLaunchApp) {
       onNotifications.add(details.payload);
     }
 
-    await flutterLocalNotificationsPlugin.initialize(
+    await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onSelectNotification: (payload) {
         onNotifications.add(payload);
@@ -56,9 +57,10 @@ class LocalNotificationService extends BaseLocalNotificationService {
     // display a dialog with the notification details, tap ok to go to another page
   }
 
+  @override
   Future<void> showNotification(
       {LocalNotificationModel? localNotificationModel}) async {
-    await flutterLocalNotificationsPlugin.show(
+    await _flutterLocalNotificationsPlugin.show(
       localNotificationModel!.id,
       localNotificationModel.title,
       localNotificationModel.body,
@@ -67,9 +69,10 @@ class LocalNotificationService extends BaseLocalNotificationService {
     );
   }
 
+  @override
   Future<void> showScheduledNotification(
       {LocalNotificationModel? localNotificationModel}) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
       localNotificationModel!.id,
       localNotificationModel.title,
       localNotificationModel.body,
@@ -103,11 +106,13 @@ class LocalNotificationService extends BaseLocalNotificationService {
     );
   }
 
+  @override
   Future<void> cancelNotification(int id) async {
-    await flutterLocalNotificationsPlugin.cancel(id);
+    await _flutterLocalNotificationsPlugin.cancel(id);
   }
 
+  @override
   Future<void> cancelAllNotifications() async {
-    await flutterLocalNotificationsPlugin.cancelAll();
+    await _flutterLocalNotificationsPlugin.cancelAll();
   }
 }

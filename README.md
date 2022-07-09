@@ -1,16 +1,14 @@
-# subscriptionalertapp
+# Subscription Alert App
 
-A new Flutter project.
+- Animations
+  - OpenContainer animation
+- Local Database
+  - Creating a HiveModel with Hive
+- Local Notifications
+  - Listening to notifications with RXDart
+  - Redirect to custom route for clicked notification
+- Timezone with DateTime
+  - Returns the appropriate date and time in whichever time zone it is.
 
-## Getting Started
+![SS_1](/screenshots/ss_gif.gif) 
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

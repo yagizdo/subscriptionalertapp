@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:subscriptionalertapp/core/constants/color_constant.dart';
+import '../../../../core/constants/color_constant.dart';
 
-import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
+import '../../model/subs_model.dart';
 
-import '../../../../core/locators/locators.dart';
+import '../../../../core/constants/radius_constant.dart';
+import '../../../../core/init/service_locators_init.dart';
 import '../../../../core/services/theme/theme_service.dart';
 
 class SubsCardWidget extends StatelessWidget {
   const SubsCardWidget({
     Key? key,
-    this.subsModel, this.onTap,
+    this.subsModel,
+    this.onTap,
   }) : super(key: key);
   final SubsModel? subsModel;
   final VoidCallback? onTap;
@@ -20,7 +22,7 @@ class SubsCardWidget extends StatelessWidget {
     final themeService = locator<ThemeService>();
 
     return InkWell(
-      borderRadius: BorderRadius.circular(8.0),
+      borderRadius: BorderRadius.circular(RadiusConstant.MIN.r),
       onTap: onTap,
       splashColor: Color(
         subsModel?.color_2 ?? ColorConstant.CITRUSPEEL_1,
@@ -28,9 +30,9 @@ class SubsCardWidget extends StatelessWidget {
       child: Ink(
         height: 150.h,
         width: 350.w,
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(12.0.sm),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(RadiusConstant.MIN.r),
           gradient: LinearGradient(
             colors: [
               Color(
@@ -40,9 +42,9 @@ class SubsCardWidget extends StatelessWidget {
                 subsModel?.color_2 ?? ColorConstant.CITRUSPEEL_2,
               ),
             ],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(1.0, 0.0),
-            stops: [0.0, 1.0],
+            begin: const FractionalOffset(0.0, 0.0),
+            end: const FractionalOffset(1.0, 0.0),
+            stops: const [0.0, 1.0],
             tileMode: TileMode.clamp,
           ),
           boxShadow: const [
@@ -67,7 +69,7 @@ class SubsCardWidget extends StatelessWidget {
                     Text(
                       subsModel?.name ?? "Platform Name",
                       style: themeService.textStyle.bodyMedium!.copyWith(
-                        fontSize: 18,
+                        fontSize: 18.sm,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -77,7 +79,7 @@ class SubsCardWidget extends StatelessWidget {
                     Text(
                       subsModel?.description ?? "Description (Optional)",
                       style: themeService.textStyle.bodyMedium!.copyWith(
-                        fontSize: 14,
+                        fontSize: 14.sm,
                       ),
                     ),
                   ],
@@ -88,7 +90,7 @@ class SubsCardWidget extends StatelessWidget {
                     Text(
                       subsModel?.price ?? "0.0",
                       style: themeService.textStyle.bodyMedium!.copyWith(
-                        fontSize: 18,
+                        fontSize: 18.sm,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -98,7 +100,7 @@ class SubsCardWidget extends StatelessWidget {
                     Text(
                       subsModel?.type ?? "Monthly",
                       style: themeService.textStyle.bodyMedium!.copyWith(
-                        fontSize: 14,
+                        fontSize: 14.sm,
                       ),
                     ),
                   ],
@@ -111,7 +113,7 @@ class SubsCardWidget extends StatelessWidget {
                 Text(
                   "Upcoming payment",
                   style: themeService.textStyle.bodyMedium!.copyWith(
-                    fontSize: 14,
+                    fontSize: 14.sm,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -121,7 +123,7 @@ class SubsCardWidget extends StatelessWidget {
                 Text(
                   subsModel?.paymentDate ?? "Day/Month/Year",
                   style: themeService.textStyle.bodyMedium!.copyWith(
-                    fontSize: 14,
+                    fontSize: 14.sm,
                   ),
                 ),
               ],

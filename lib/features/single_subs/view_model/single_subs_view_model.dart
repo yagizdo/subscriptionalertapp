@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
-import 'package:subscriptionalertapp/core/services/local_database/local_database_service.dart';
-import 'package:subscriptionalertapp/features/home/model/subs_model.dart';
+import '../../../core/services/local_database/local_database_service.dart';
+import '../../home/model/subs_model.dart';
 
-import '../../../core/locators/locators.dart';
+import '../../../core/init/service_locators_init.dart';
 part 'single_subs_view_model.g.dart';
 
 @lazySingleton

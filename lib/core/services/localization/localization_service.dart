@@ -10,22 +10,22 @@ class LocalizationService implements BaseLocalizationService {
   LocalizationService(
     @factoryParam this._context,
   ) {
-    _localization = EasyLocalization.of(_context);
+    localization = EasyLocalization.of(_context);
   }
 
   final BuildContext _context;
-  late final _localization;
+  late final dynamic localization;
 
   get supportedLocales => [LocaleConstant.EN, LocaleConstant.TR];
-  get locale => _localization?.locale;
-  get localizationDelegates => _localization?.delegates;
+  get locale => localization?.locale;
+  get localizationDelegates => localization?.delegates;
 
   @override
   void changeLang() {
     if (locale == LocaleConstant.EN) {
-      _localization.setLocale(LocaleConstant.TR);
+      localization.setLocale(LocaleConstant.TR);
     } else {
-      _localization.setLocale(LocaleConstant.EN);
+      localization.setLocale(LocaleConstant.EN);
     }
   }
 }
