@@ -34,15 +34,12 @@
 
 ### Add Subscription Screen
 <img align="left" width="250" height="530" src="screenshots/ss_2.png">
-&nbsp;
-&nbsp;
 <img align="center" width="250" height="530" src="screenshots/ss_6.png">
-&nbsp;
-&nbsp;
 <img align="center" width="250" height="530" src="screenshots/ss_7.png">
 
 
 ### App Gif
+
 <img align="center" width="250" height="530" src="screenshots/ss_gif.gif">
 
 
